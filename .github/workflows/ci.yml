@@ -1,4 +1,3 @@
-notepad .github\workflows\ci.yml
 name: Deploy Docusaurus site to GitHub Pages
 
 on:
@@ -20,12 +19,16 @@ jobs:
           node-version: '20'
 
       - name: Install dependencies
-        run: yarn install
+        run: npm install
 
       - name: Build website
-        run: yarn build
+        run: npm run build
+
+      - name: Run tests
+        run: npm test
 
       - name: Deploy to GitHub Pages
+        if: success()
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
